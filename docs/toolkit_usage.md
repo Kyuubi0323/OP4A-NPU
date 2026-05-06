@@ -22,7 +22,7 @@ git clone https://github.com/ZIFENG278/ai-sdk.git
 
 ## Configure the Model Compilation Script
 
-**X86 Linux PC**
+**Docker**
 ```shell
 cd ai-sdk/models
 source env.sh v2  # NPU_VERSION
@@ -35,7 +35,7 @@ cp ../scripts/* .
 
 Go to the `ai-sdk/models/MobileNetV2_Imagenet` model example directory in the sample repository in Docker.
 
-**X86 Linux PC**
+**Docker**
 ```shell
 cd ai-sdk/models/MobileNetV2_Imagenet
 ```
@@ -68,9 +68,9 @@ The following files are included in this directory:
 - Automatically generate model input file templates `MODEL_DIR_inputmeta.yml`
 - Automatically generate model post-processing file templates `MODEL_DIR_postprocess_file.yml`
 
-**X86 Linux PC**
+**Docker**
 ```shell
-# pegasus_import.sh MODEL_DIR
+# pegasus_import.sh MODEL_DIR :D remember to put the name of the folder same as the model name !!!
 ./pegasus_import.sh MobileNetV2_Imagenet/
 ```
 
@@ -123,7 +123,7 @@ Use `pegasus_quantize.sh` to quantify a specified type of model.
 
 > **Tips:** If the source model itself is already a quantization model, there is no need to quantize it here, otherwise an error will be reported.
 
-**X86 Linux PC**
+**Docker**
 ```shell
 # pegasus_quantize.sh MODEL_DIR QUANTIZED ITERATION
 pegasus_quantize.sh MobileNetV2_Imagenet int16 10
@@ -146,7 +146,7 @@ After the model is quantized, the performance will be improved to varying degree
 
 The unquantized float model is inferred, and the results are obtained as a reference for the quantified model results.
 
-**X86 Linux PC**
+**Docker**
 ```shell
 # pegasus_inference.sh MODEL_DIR QUANTIZED ITERATION
 pegasus_inference.sh MobileNetV2_Imagenet/ float
@@ -182,7 +182,7 @@ The tensor of inference is also saved in the `MODEL_DIR/inf/MODEL_DIR_QUANTIZED`
 
 ### Inference uint8 Quantization Model
 
-**X86 Linux PC**
+**Docker**
 ```shell
 # pegasus_inference.sh MODEL_DIR QUANTIZED ITERATION
 pegasus_inference.sh MobileNetV2_Imagenet/ uint8
@@ -203,7 +203,7 @@ I 07:02:20 466: 0.005068646278232336
 
 ### Inference PCQ Quantitative Models
 
-**X86 Linux PC**
+**Docker**
 ```shell
 # pegasus_inference.sh MODEL_DIR QUANTIZED ITERATION
 pegasus_inference.sh MobileNetV2_Imagenet/ pcq
@@ -224,7 +224,7 @@ The highest confidence level of the top 5 output here is `812`, and the correspo
 
 ### Inference int16 Quantization Model
 
-**X86 Linux PC**
+**Docker**
 ```shell
 # pegasus_inference.sh MODEL_DIR QUANTIZED ITERATION
 pegasus_inference.sh MobileNetV2_Imagenet/ int16
@@ -249,7 +249,7 @@ The highest confidence level of the top5 output here is `812`, and the correspon
 
 Here is an example of an INT16 quantization model:
 
-**X86 Linux PC**
+**Docker**
 ```shell
 # pegasus_export_ovx.sh MODEL_DIR QUANTIZED
 pegasus_export_ovx.sh MobileNetV2_Imagenet int16
@@ -273,7 +273,7 @@ The Vivante IDE allows you to validate the generated target model and OpenVX pro
 
 ### Import the Environment Variables Required for the Vivante IDE
 
-**X86 Linux PC**
+**Docker**
 ```shell
 export USE_IDE_LIB=1
 export VIVANTE_SDK_DIR=~/Vivante_IDE/VivanteIDE5.8.2/cmdtools/vsimulator
@@ -285,7 +285,7 @@ unset VSI_USE_IMAGE_PROCESS
 
 **Compile the executable**
 
-**X86 Linux PC**
+**Docker**
 ```shell
 cd MobileNetV2_Imagenet/wksp/MobileNetV2_Imagenet_int16
 make -f makefile.linux
@@ -295,7 +295,7 @@ The resulting target file is a binary executable of `MODEL_DIR_QUANTIZED`.
 
 **Run the executable**
 
-**X86 Linux PC**
+**Docker**
 ```shell
 # Usage: ./mobilenetv2imagenetint16 data_file inputs...
 ./mobilenetv2imagenetint16 MobileNetV2_Imagenet_int16.export.data ../../space_shuttle_224x224.jpg
@@ -326,7 +326,7 @@ Average 229309.53ms or 229309536.00us
 
 **Compile the executable**
 
-**X86 Linux PC**
+**Docker**
 ```shell
 cd MobileNetV2_Imagenet/wksp/MobileNetV2_Imagenet_int16_nbg_unify
 make -f makefile.linux
@@ -336,7 +336,7 @@ The resulting target file is a binary executable of `MODEL_DIR_QUANTIZED`.
 
 **Run the executable**
 
-**X86 Linux PC**
+**Docker**
 ```shell
 # Usage: ./mobilenetv2imagenetint16 data_file inputs...
 ./mobilenetv2imagenetint16 network_binary.nb ../../space_shuttle_224x224.jpg
